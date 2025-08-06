@@ -4,6 +4,7 @@ import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { globalColors } from '../theme/theme';
 import { Text, useWindowDimensions, View } from 'react-native';
 import { BottomTabNavigator } from './BottomTabNavigator';
+import Ionicons from '@react-native-vector-icons/ionicons';
 
 const Drawer = createDrawerNavigator();
 
@@ -29,8 +30,8 @@ export const SideMenuNavigator =() =>{
         
       }}
     >
-      <Drawer.Screen name="StackNavigator" component={BottomTabNavigator} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen options={{drawerIcon: (({color}) => ( <Ionicons name='bonfire-outline' size={20} color={color}/> ))}} name="Tabs" component={BottomTabNavigator} />
+      <Drawer.Screen options={{drawerIcon: (({color}) => ( <Ionicons name='person-circle-outline' size={20} color={color}/> ))}} name="Profile" component={ProfileScreen} />
     </Drawer.Navigator>
   );
 }
