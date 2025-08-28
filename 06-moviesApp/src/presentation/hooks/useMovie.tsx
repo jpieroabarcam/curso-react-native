@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import  * as UseCases from '../../core/use-cases';
 import { movieDBFetcher } from "../../config/adapters/movieDB.adapter";
 import { FullMovie } from "../../core/entities/movie.entity";
+import { Cast } from "../../core/entities/cast.entity";
 
 export const useMovie = (movieId: number) => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [fullMovie, setFullMovie] = useState<FullMovie>();
+    const [cast, setCast] = useState<Cast[]>();
 
     useEffect(() => {      
         loadMovie();
@@ -16,15 +18,18 @@ export const useMovie = (movieId: number) => {
 
         setIsLoading(true)
 
-        const getMoviePromise = await UseCases.getMovieByIdUseCase(movieDBFetcher,movieId)
-        console.log(getMoviePromise);
+        const getMoviePromise =  UseCases.getMovieByIdUseCase(movieDBFetcher,movieId);
+        const castPromise = UseCases.getMovieCastUseCase(movieDBFetcher, movieId);
+        
 
-        const [getMovie] 
+        const [getMovie,castMovie] 
         = await Promise.all([
             getMoviePromise,
+            castPromise
         ])
 
-        setFullMovie( getMovie);       
+        setFullMovie( getMovie);
+        setCast(castMovie);        
 
         setIsLoading(false)
     }
@@ -32,5 +37,6 @@ export const useMovie = (movieId: number) => {
     return {
         isLoading,
         fullMovie,
+        cast,
     }
 }
