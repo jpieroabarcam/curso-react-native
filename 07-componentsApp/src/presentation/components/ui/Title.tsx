@@ -18,7 +18,7 @@ export const Title = ({text,safe,white}:Props) => {
             marginBottom: 10,
             color: white ? 'white' : colors.text
         }}>
-            Title
+            {text}
         </Text>
     </View>
   )

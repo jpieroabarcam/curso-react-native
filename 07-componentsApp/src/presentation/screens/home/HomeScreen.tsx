@@ -8,7 +8,6 @@ export const HomeScreen = () => {
     <View style={[globalStyles.mainContainer]}>        
       <View style={[globalStyles.globalMargin]}>
         <ScrollView>
-          
 
           <Title text='Opciones de menu' safe/>
           {
