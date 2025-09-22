@@ -4,8 +4,12 @@ import { Title } from '../../components/ui/Title'
 import { globalStyles } from '../../../config/theme/theme'
 import { Button } from '../../components/ui/Button'
 import { showPrompt } from '../../../config/adapters/promt.adapter'
+import { useContext } from 'react'
+import { ThemeContext } from '../../context/ThemeContext'
 
 export const AlertScreen = () => {
+
+  const  { isDark } = useContext(ThemeContext);
 
     const createTwoButtonAlert = () => {        
         Alert.alert('Alert Title', 'My Alert Msg', [
@@ -15,8 +19,12 @@ export const AlertScreen = () => {
             style: 'destructive',
 
         },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]);
+        {text: 'OK', onPress: () => console.log('OK Pressed')},        
+        ],
+        {
+          userInterfaceStyle: isDark ? 'dark' : 'light'
+        },
+      );
     }
   const createThreeButtonAlert = () =>
     Alert.alert('Alert Title', 'My Alert Msg', [
@@ -34,7 +42,8 @@ export const AlertScreen = () => {
         cancelable: true,
         onDismiss() {
             console.log('onDismiss')
-        }
+        },
+        userInterfaceStyle: isDark ? 'dark' : 'light'
     });
 
     const onShowPromt = () => {
@@ -45,7 +54,7 @@ export const AlertScreen = () => {
                 { text: 'Ok', onPress: () => console.log('Ok')}
             ],
             promptType: 'plain-text',
-            placeHolder: 'Placeholder'
+            placeHolder: 'Placeholder',
         })
         
         // solo en iOS - codigo nativo

@@ -2,11 +2,14 @@ import { ScrollView, Text, View } from 'react-native'
 import { globalStyles } from '../../../config/theme/theme';
 import { Title } from '../../components/ui/Title';
 import { MenuItem } from '../../components/ui/MenuItems';
+import { CustomView } from '../../components/ui/CustomView';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 export const HomeScreen = () => {
+  const  { colors } = useContext(ThemeContext);
   return (
-    <View style={[globalStyles.mainContainer]}>        
-      <View style={[globalStyles.globalMargin]}>
+    <CustomView margin>    
         <ScrollView>
 
           <Title text='Opciones de menu' safe/>
@@ -22,17 +25,6 @@ export const HomeScreen = () => {
           }
           <View style={{marginTop: 30}} />
           {
-            menuItems.map( (item,index) => (              
-              <MenuItem 
-                key={item.component} 
-                {...item} 
-                isFirst={ index == 0}
-                isLast={ index == menuItems.length - 1 }
-              />
-            ))
-          }
-          <View style={{marginTop: 30}} />
-          {
             uiItems.map( (item,index) => (              
               <MenuItem 
                 key={item.component} 
@@ -42,12 +34,21 @@ export const HomeScreen = () => {
               />
             ))
           }
+          <View style={{marginTop: 30}} />
+          {
+            menuItems.map( (item,index) => (              
+              <MenuItem 
+                key={item.component} 
+                {...item} 
+                isFirst={ index == 0}
+                isLast={ index == menuItems.length - 1 }
+              />
+            ))
+          }
+          
         </ScrollView>
         <View style={{marginTop: 30}} />
-
-      </View>
-        
-    </View>
+    </CustomView>
   )
 }
 
