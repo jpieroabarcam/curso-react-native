@@ -24,20 +24,20 @@ const fadeAnimation: StackCardStyleInterpolator = ({ current }) => {
     }
 }
 
-export const StackNavigator =() => {
-  return (
-    <Stack.Navigator 
-        initialRouteName='LoginScreen'
-        screenOptions={{ 
-            headerShown: false, 
-            // cardStyleInterpolator: fadeAnimation
-        }}
-    >
-      <Stack.Screen options={{cardStyleInterpolator: fadeAnimation}} name="LoadingScreen" component={LoadingScreen} />      
-      <Stack.Screen options={{cardStyleInterpolator: fadeAnimation}} name="LoginScreen" component={LoginScreen} />      
-      <Stack.Screen options={{cardStyleInterpolator: fadeAnimation}} name="HomeScreen" component={HomeScreen} />      
-      <Stack.Screen options={{cardStyleInterpolator: fadeAnimation}} name="RegisterScreen" component={RegisterScreen} />      
-      <Stack.Screen name="ProductScreen" component={ProductScreen} />      
-    </Stack.Navigator>
-  );
+export const StackNavigator = () => {
+    return (
+        <Stack.Navigator
+            initialRouteName='LoginScreen'
+            screenOptions={{
+                headerShown: false,
+                // cardStyleInterpolator: fadeAnimation
+            }}
+        >
+            <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoadingScreen" component={LoadingScreen} />
+            <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="RegisterScreen" component={RegisterScreen} />
+            <Stack.Screen name="ProductScreen" component={ProductScreen} />
+        </Stack.Navigator>
+    );
 }
