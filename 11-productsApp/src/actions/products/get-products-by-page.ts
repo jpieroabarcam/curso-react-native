@@ -8,8 +8,7 @@ export const getProductsByPage = async(page: number, limit: number =20): Promise
 
     try {
         const {data} = await tesloApi.get<TesloProduct[]>(`/products?limit=${limit}&offset=${page * 10}`)
-
-        const products = data.map(ProductMapper.tesloProductToEntity)        
+        const products = data.map(ProductMapper.tesloProductToEntity)  
         return products;
 
     } catch (error) {

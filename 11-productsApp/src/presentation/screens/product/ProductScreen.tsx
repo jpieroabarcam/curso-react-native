@@ -1,12 +1,158 @@
-import { Text, View } from 'react-native'
+
+import { Button, ButtonGroup, Input, Layout, useTheme,Text } from '@ui-kitten/components'
+import { MainLayout } from '../../layouts/MainLayout'
+import { useQuery } from '@tanstack/react-query'
+import { StackScreenProps } from '@react-navigation/stack'
+import { RootStackParams } from '../../navigation/StackNavigator'
+import { getProductById } from '../../../actions/products/get-product-by-id'
+import { useRef } from 'react'
+import { FlatList, ScrollView } from 'react-native'
+import { FadeInImage } from '../../components/ui/FadeInImage'
+import { Gender, Size } from '../../../domain/entities/product'
+import { MyIcon } from '../../components/ui/MyIcon'
 
 
 
+const sizes: Size[]=[ Size.Xs,Size.S,Size.M,Size.L,Size.Xl,Size.Xxl]
+const genders: Gender[]=[Gender.Kid, Gender.Men, Gender.Women, Gender.Unisex]
 
-export const ProductScreen = () => {
+interface Props extends StackScreenProps<RootStackParams,'ProductScreen'>{}
+
+export const ProductScreen = ({route}: Props) => {
+  const productIdRef = useRef(route.params.productId);
+  const theme = useTheme();
+  
+  const {productId} = route.params;
+
+  const {data: product} = useQuery({
+    queryKey: ['product', productId],
+    queryFn: ()=> getProductById(productIdRef.current)
+  })
+
+  //useQuery
+  //useMutation
+
+  if(!product) {
+    return( <MainLayout title='Cargando...'></MainLayout>)
+  }
+
   return (
-    <View>
-        <Text>ProductScreen</Text>
-    </View>
+    <MainLayout
+      title={product.title}
+      subtitle={`Precio: ${product.price}`}
+    >
+      <ScrollView style={{flex:1}}>
+        {/* imagenes del producto */}
+        <Layout style={{ marginHorizontal: 5}}>
+          {/* TODO: tener consideracion que tenemos cuando no hay imagenes */}
+          <FlatList 
+          data={ product.images}
+          keyExtractor={ (item) => item}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={ ({item}) => (
+            <FadeInImage 
+              uri={item}
+              style={{width: 200,  height: 200, marginHorizontal: 7}}
+            />
+          )}
+          />
+
+        </Layout>
+
+        {/* Formulario */}
+        <Layout style={{ marginHorizontal: 5}}>
+          <Input 
+            label="Titulo"
+            value= {product.title}
+            style= {{marginVertical: 5}}
+          />
+          <Input 
+            label="Slug"
+            value= {product.slug}
+            style= {{marginVertical: 5}}
+          />
+          <Input 
+            label="Descripción"
+            value= {product.description}
+            multiline
+            numberOfLines={5}
+            style= {{marginVertical: 5}}            
+          />
+        </Layout>
+
+        {/*  Precio inventario */}
+
+        <Layout style={{marginVertical:5,marginHorizontal: 15, flexDirection:'row', gap:10}}>
+          <Input 
+            label="Precio"
+            value={product.price.toString()}
+            style={{ flex:1}}
+          />
+          <Input 
+            label="Inventario"
+            value={product.stock.toString()}
+            style={{ 
+              flex:1,
+              backgroundColor: true ? theme['color-primary-200'] : undefined
+
+            }}
+          />
+
+        </Layout>
+
+        {/* Selectores */}
+        <ButtonGroup 
+        style={{margin:2, marginTop:20, marginHorizontal:15}}
+        size='small'
+        appearance='outline'
+        >
+          {
+            sizes.map((size) => (
+              <Button 
+              key={size}
+              style={{flex:1}}
+              >
+                {size}
+              </Button>
+            ))
+          }
+        </ButtonGroup>
+
+        {/* generos */}
+        <ButtonGroup 
+        style={{margin:2, marginTop:20, marginHorizontal:15}}
+        size='small'
+        appearance='outline'
+        >
+          {
+            genders.map((gender) => (
+              <Button 
+              key={gender}
+              style={{flex:1}}
+              >
+                {gender}
+              </Button>
+            ))
+          }
+        </ButtonGroup>
+
+        {/* Boton guardar */}
+        <Button
+          accessoryLeft={ <MyIcon name="save-outline" white/>}
+          onPress={()=> console.log('Guardar')}
+          style= {{margin: 15}}
+
+        >
+          Guardar
+        </Button>
+
+        <Text> {JSON.stringify(product, null, 2)}</Text>
+
+        <Layout style={{height:300}} />
+
+      </ScrollView>
+
+    </MainLayout>
   )
 }
