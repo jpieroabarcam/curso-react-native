@@ -105,3 +105,6 @@ To learn more about React Native, take a look at the following resources:
 3. Renombrar archivo `.env.template` a `.env`
 4. Actualizar las variables de entorno en el archivo `.env`
 5. Ejecutar el proyecto ```npm run android```
+
+siempre instalar
+npm i @ui-kitten/eva-icons react-native-svg --legacy-peer-deps
