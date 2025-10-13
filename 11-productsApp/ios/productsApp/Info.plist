@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Capture Image</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Select image/video from photos</string>
 	<key>CFBundleDisplayName</key>
 	<string>productsApp</string>
 	<key>CFBundleExecutable</key>
